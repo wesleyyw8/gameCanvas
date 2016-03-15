@@ -1,5 +1,6 @@
 var ctx;
 var score = 0;
+var timer = 10;
 var options = {
 	width: $("#canvas").width(),
 	height: $("#canvas").height()
@@ -9,6 +10,7 @@ var canvas = document.getElementById('canvas');
 if (canvas.getContext) {
 	ctx = canvas.getContext('2d');
 	createCircles();
+	timerLogic();
 }
 
 function createCircles(){
@@ -26,7 +28,10 @@ function createCircles(){
 			  updateScore();
 			}
 		};
-		createCircles();
+		if (timer > 1)
+			createCircles();
+		else
+			cleanCanvas();
 	},2000);
 }
 function drawCircle(){
@@ -55,6 +60,10 @@ function getMousePos(canvas, evt) {
 function updateScore(){
 	$(".scoreValue").text(++score);
 }
-function timer(){
-	
+function timerLogic(){
+	setTimeout(function(){
+		$(".timerValue").text(--timer);
+		if (timer > 0)
+			timerLogic();
+	},1000);
 }
