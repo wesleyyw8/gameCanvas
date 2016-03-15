@@ -64,7 +64,15 @@ function updateScore(){
 function timerLogic(){
 	setTimeout(function(){
 		$(".timerValue").text(--timer);
+		if (timer == 10)
+			changeMusic('starman');
 		if (timer > 0)
 			timerLogic();
+		else
+			changeMusic('flag');
 	},1000);
+}
+function changeMusic(name){
+	$("#backgroundMusic").remove();
+	$("body").append("<embed id='backgroundMusic' src='music/"+name+".mp3' width='180' height='90' loop='false' hidden='true' volume='99'  />")
 }
