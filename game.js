@@ -14,18 +14,19 @@ if (canvas.getContext) {
 }
 
 function createCircles(){
-	setTimeout(function(){
+	var radius = 10;
+	function doProcess(){
 		cleanCanvas();
 		ctx.beginPath();
-		drawCircle();
+		var xyObj = drawCircle(generateRandomNumber(radius, options.width-radius), generateRandomNumber(radius, 150-radius), 10);
 		ctx.fill();
 		canvas.onclick = function (e) {
 			var mouseX = e.clientX - canvas.getBoundingClientRect().left;
 			var mouseY = e.clientY - canvas.getBoundingClientRect().top;
 			if (ctx.isPointInPath(mouseX, mouseY)) {
-				canvas.onclick = null;
-			  ctx.fill();
-			  cleanCanvas();
+				clearTimeout(timerDoProcess);
+				eliminiateCircle({x: mouseX, y: mouseY});
+				canvas.onclick = null;;
 			  updateScore();
 			}
 		};
@@ -33,13 +34,26 @@ function createCircles(){
 			createCircles();
 		else
 			cleanCanvas();
-	},2000);
+	}
+	timerDoProcess = setTimeout(doProcess, 1000);
 }
-function drawCircle(){
-	var radius = 10;
-	var x = generateRandomNumber(radius, options.width-radius);
-	var y = generateRandomNumber(radius, 150-radius);
+function eliminiateCircle(xyObj){
+	cleanCanvas();
+	ctx.beginPath();
+	drawCircle(xyObj.x, xyObj.y, 10);
+	ctx.fill();
+	xyObj.y += 1;
+	if (xyObj.y < 200)
+		setTimeout(function(){eliminiateCircle(xyObj)},10);
+	else
+		createCircles();
+}
+function drawCircle(x, y, radius){
 	ctx.arc( x, y, radius, 0, (Math.PI/180)*360, false);
+	return xyObj = {
+		x: x,
+		y: y
+	};
 }
 function generateRandomNumber(minValue,maxValue){
 	var result = -1;
