@@ -1,6 +1,6 @@
 var ctx;
 var score = 0;
-var timer = 40;
+var timer = 30;
 var options = {
 	width: $("#canvas").width(),
 	height: $("#canvas").height()
