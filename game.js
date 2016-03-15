@@ -1,4 +1,5 @@
 var ctx;
+var score = 0;
 var options = {
 	width: $("#canvas").width(),
 	height: $("#canvas").height()
@@ -22,21 +23,18 @@ function createCircles(){
 			if (ctx.isPointInPath(mouseX, mouseY)) {
 			  ctx.fill();
 			  cleanCanvas();
+			  updateScore();
 			}
 		};
 		createCircles();
 	},2000);
 }
-
 function drawCircle(){
 	var radius = 10;
 	var x = generateRandomNumber(radius, options.width-radius);
 	var y = generateRandomNumber(radius, 150-radius);
-	console.log("xCircle: "+x+" yCircle: "+y);
 	ctx.arc( x, y, radius, 0, (Math.PI/180)*360, false);
 }
-
-
 function generateRandomNumber(minValue,maxValue){
 	var result = -1;
 	while(result < minValue || result > maxValue){
@@ -54,4 +52,9 @@ function getMousePos(canvas, evt) {
     y: evt.clientY - rect.top
   };
 }
-
+function updateScore(){
+	$(".scoreValue").text(++score);
+}
+function timer(){
+	
+}
