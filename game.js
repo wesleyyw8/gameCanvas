@@ -23,6 +23,7 @@ function createCircles(){
 			var mouseX = e.clientX - canvas.getBoundingClientRect().left;
 			var mouseY = e.clientY - canvas.getBoundingClientRect().top;
 			if (ctx.isPointInPath(mouseX, mouseY)) {
+				canvas.onclick = null;
 			  ctx.fill();
 			  cleanCanvas();
 			  updateScore();
